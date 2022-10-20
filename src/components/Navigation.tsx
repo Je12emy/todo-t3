@@ -7,8 +7,8 @@ const Navigation: FC = () => {
   const [show, setShow] = useState<boolean>(false);
   return (
     <>
-      <nav className="flex min-w-max flex-col bg-gray-800 p-2 shadow-md">
-        <div className="flex flex-row justify-between">
+      <nav className="flex min-h-[3.5rem] min-w-max flex-col bg-gray-800 p-2 shadow-md transition-all">
+        <div className="flex flex-row items-center justify-between">
           <button onClick={() => setShow(!show)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -27,19 +27,21 @@ const Navigation: FC = () => {
           </button>
           <UserInfo />
         </div>
-        {show && (
-          <div className="grid grid-cols-1 grid-rows-2 items-start justify-start space-y-2">
-            <Link href="/about">
-              <a className="font-medium underline"> About </a>
-            </Link>
-            <button
-              onClick={() => signOut()}
-              className="font-semibold text-rose-500"
-            >
-              Logout
-            </button>
-          </div>
-        )}
+        <div
+          className={`grid-cols-1 grid-rows-2 items-start justify-start space-y-2 ${
+            show ? "grid" : "hidden"
+          } transition-all`}
+        >
+          <Link href="/about">
+            <a className="font-medium underline"> About </a>
+          </Link>
+          <button
+            onClick={() => signOut()}
+            className="justify-self-center font-semibold text-rose-500"
+          >
+            Logout
+          </button>
+        </div>
       </nav>
     </>
   );

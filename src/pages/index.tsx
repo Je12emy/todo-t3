@@ -1,16 +1,20 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import BaseLayout from "../components/BaseLayout";
-import Navigation from "../components/Navigation";
+import Loader from "../components/Loader";
+import NoTasks from "../components/NoTasks";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  return (
-    <BaseLayout>
-      <Navigation /> 
-      <p> To-Do </p>
-    </BaseLayout>
-  );
+  const { data, isLoading } = trpc.useQuery(["task.all"]);
+
+  if (isLoading) {
+    return <Loader message="Loading tasks" />;
+  }
+
+  if (!data || data.length === 0) {
+    return <NoTasks />;
+  }
+
+  return <pre> {JSON.stringify(data)} </pre>;
 };
 
 export default Home;
